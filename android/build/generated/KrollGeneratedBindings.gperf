@@ -1,0 +1,18 @@
+%define lookup-function-name lookupGeneratedInit
+%define class-name AuthtimesheetBindings
+%{
+
+#include <string.h>
+#include <v8.h>
+#include <KrollBindings.h>
+
+#include "ti.authtimesheet.SigninProxy.h"
+#include "ti.authtimesheet.AuthtimesheetModule.h"
+
+
+%}
+struct titanium::bindings::BindEntry;
+%%
+ti.authtimesheet.AuthtimesheetModule,::ti::authtimesheet::AuthtimesheetModule::bindProxy,::ti::authtimesheet::AuthtimesheetModule::dispose
+ti.authtimesheet.SigninProxy,::ti::authtimesheet::authtimesheet::SigninProxy::bindProxy,::ti::authtimesheet::authtimesheet::SigninProxy::dispose
+%%
