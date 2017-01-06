@@ -35,6 +35,7 @@ public class AuthtimesheetModule extends KrollModule
 	@Kroll.onAppCreate
 	public static void onAppCreate(TiApplication app)
 	{
+		com.google.android.gms.R.initialize();
 		Log.d(LCAT, "inside onAppCreate");
 		// put module init code that needs to run when the application is created
 	}
@@ -62,4 +63,3 @@ public class AuthtimesheetModule extends KrollModule
 	}
 
 }
-
