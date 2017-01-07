@@ -8,6 +8,7 @@
  */
 package ti.authtimesheet;
 
+import java.util.HashMap;
 import org.appcelerator.kroll.KrollDict;
 import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
@@ -21,13 +22,18 @@ import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
 import org.appcelerator.titanium.TiApplication;
 
+import org.appcelerator.kroll.KrollFunction;
+
+import org.appcelerator.titanium.util.TiActivityResultHandler;
+import org.appcelerator.titanium.util.TiActivitySupport;
+
 import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.SignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -40,14 +46,17 @@ import com.google.android.gms.common.api.Status;
 //backend id: 1047497242003-nul6kfbbg32krgj6ik46o3mnp04ej9as.apps.googleusercontent.com
 // This proxy can be created by calling Authtimesheet.createSigin({message: "hello world"})
 @Kroll.proxy(creatableInModule=AuthtimesheetModule.class)
-public class SigninProxy extends TiViewProxy implements GoogleApiClient.OnConnectionFailedListener
+public class SigninProxy extends TiViewProxy implements GoogleApiClient.OnConnectionFailedListener, TiActivityResultHandler
 {
 	// Standard Debugging variables
 	private static final String LCAT = "SigninProxy";
 	private static final boolean DBG = TiConfig.LOGD;
 
 	private static final int RC_GET_AUTH_CODE = 9003;
-	private GoogleApiClient mGoogleApiClient;
+	private GoogleApiClient mGoogleApiClient = null;
+	protected String serverClientId = "1047497242003-nul6kfbbg32krgj6ik46o3mnp04ej9as.apps.googleusercontent.com";
+
+	protected KrollFunction onSuccess;
 
 	private class SigninView extends TiUIView
 	{
@@ -94,39 +103,111 @@ public class SigninProxy extends TiViewProxy implements GoogleApiClient.OnConnec
 		view.getLayoutParams().autoFillsHeight = true;
 		view.getLayoutParams().autoFillsWidth = true;
 
-		String serverClientId = "1047497242003-nul6kfbbg32krgj6ik46o3mnp04ej9as.apps.googleusercontent.com";
-		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER))
-                .requestServerAuthCode(serverClientId)
-                .requestEmail()
-                .build();
-        // [END configure_signin]
-
-		  Activity act = TiApplication.getAppRootOrCurrentActivity();
-        // Build GoogleAPIClient with the Google Sign-In API and the above options.
-		  mGoogleApiClient = new GoogleApiClient.Builder(act)
-                .enableAutoManage((FragmentActivity)act /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-		  getAuthCode();
+		if(mGoogleApiClient == null){
+			GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+	                .requestScopes(new Scope(Scopes.DRIVE_APPFOLDER), new Scope(Scopes.DRIVE_FILE))
+	                .requestIdToken(serverClientId)
+						 .requestServerAuthCode(serverClientId, false)
+	                .requestEmail()
+	                .build();
+	        // [END configure_signin]
+			  Activity act = TiApplication.getAppRootOrCurrentActivity();
+	        // Build GoogleAPIClient with the Google Sign-In API and the above options.
+			  mGoogleApiClient = new GoogleApiClient.Builder(act)
+	                .enableAutoManage((FragmentActivity)act /* FragmentActivity */, this /* OnConnectionFailedListener */)
+	                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+	                .build();
+		  }
 		  return view;
 	}
 
-	private void getAuthCode() {
+   @Override
+ 	public void onResult(Activity activity, int thisRequestCode, int resultCode, Intent data){
+ 		Log.i(LCAT, "onResult Called");
+ 		if (onSuccess == null) return;
+
+ 		if ( thisRequestCode == RC_GET_AUTH_CODE) {
+ 			GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+ 				if(result.isSuccess()){
+ 					GoogleSignInAccount acct = result.getSignInAccount();
+ 					HashMap event = new HashMap();
+ 					event.put("name", acct.getDisplayName());
+ 					event.put("email", acct.getEmail());
+ 					event.put("id_token", acct.getIdToken());
+					event.put("serverAuthCode", acct.getServerAuthCode());
+ 					event.put("photo", acct.getPhotoUrl().toString());
+ 					this.onSuccess.call(getKrollObject(),event);
+ 			}
+ 		}
+ 	}
+
+	@Kroll.method
+	public void signOut() {
+		// mGoogleApiClient.connect();
+		// if(mGoogleApiClient.isConnected()) {
+		// 	Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+		// 		new ResultCallback<Status>() {
+		// 			@Override
+		// 			public void onResult(Status status) {
+		// 			}
+		// 		}
+		// 	);
+		// }
+		mGoogleApiClient.connect();
+		mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+		@Override
+		public void onConnected(Bundle bundle) {
+			   if(mGoogleApiClient.isConnected()) {
+			       Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
+			           @Override
+			           public void onResult(Status status) {
+			               if (status.isSuccess()) {
+			                   Log.d(LCAT, "User Logged out");
+			               //     Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
+			               //     startActivity(intent);
+			               //     finish();
+			               }
+			           }
+			       });
+			   }
+			}
+			@Override
+			public void onConnectionSuspended(int i) {
+			   Log.d(LCAT, "Google API Client Connection Suspended");
+			}
+		});
+	}
+
+	@Kroll.method
+	public void signIn() {
         // Start the retrieval process for a server auth code.  If requested, ask for a refresh
         // token.  Otherwise, only get an access token if a refresh token has been previously
         // retrieved.  Getting a new access token for an existing grant does not require
         // user consent.
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-		  Activity activity = TiApplication.getAppRootOrCurrentActivity();
-        activity.startActivityForResult(signInIntent, RC_GET_AUTH_CODE);
+		  Activity activity = TiApplication.getInstance().getCurrentActivity();
+		  TiActivitySupport support = (TiActivitySupport) activity;
+      //   activity.startActivityForResult(signInIntent, RC_GET_AUTH_CODE);
+		  support.launchActivityForResult(signInIntent, RC_GET_AUTH_CODE, this);
     }
+
+ 	@Override
+ 	public void onError(Activity activity, int requestCode, Exception e){
+ 		Log.i(LCAT, "onError Called");
+ 	}
 
 	// Handle creation options
 	@Override
 	public void handleCreationDict(KrollDict options)
 	{
 		super.handleCreationDict(options);
+
+		if (options.containsKey("serverClientId")) {
+			this.serverClientId = options.get("serverClientId").toString();
+		}
+		if (options.containsKey("onSuccess")) {
+			this.onSuccess = (KrollFunction)options.get("onSuccess");
+		}
 
 		if (options.containsKey("message")) {
 			Log.d(LCAT, "example created with message: " + options.get("message"));

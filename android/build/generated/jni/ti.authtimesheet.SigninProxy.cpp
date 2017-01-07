@@ -87,8 +87,10 @@ Handle<FunctionTemplate> SigninProxy::getProxyTemplate()
 
 	// Method bindings --------------------------------------------------------
 	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "printMessage", SigninProxy::printMessage);
+	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "signOut", SigninProxy::signOut);
 	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "getMessage", SigninProxy::getMessage);
 	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "setMessage", SigninProxy::setMessage);
+	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "signIn", SigninProxy::signIn);
 
 	Local<ObjectTemplate> prototypeTemplate = proxyTemplate->PrototypeTemplate();
 	Local<ObjectTemplate> instanceTemplate = proxyTemplate->InstanceTemplate();
@@ -163,6 +165,49 @@ Handle<Value> SigninProxy::printMessage(const Arguments& args)
 
 
 				env->DeleteLocalRef(jArguments[0].l);
+
+
+	if (env->ExceptionCheck()) {
+		titanium::JSException::fromJavaException();
+		env->ExceptionClear();
+	}
+
+
+
+
+	return v8::Undefined();
+
+}
+Handle<Value> SigninProxy::signOut(const Arguments& args)
+{
+	LOGD(TAG, "signOut()");
+	HandleScope scope;
+
+	JNIEnv *env = titanium::JNIScope::getEnv();
+	if (!env) {
+		return titanium::JSException::GetJNIEnvironmentError();
+	}
+	static jmethodID methodID = NULL;
+	if (!methodID) {
+		methodID = env->GetMethodID(SigninProxy::javaClass, "signOut", "()V");
+		if (!methodID) {
+			const char *error = "Couldn't find proxy method 'signOut' with signature '()V'";
+			LOGE(TAG, error);
+				return titanium::JSException::Error(error);
+		}
+	}
+
+	titanium::Proxy* proxy = titanium::Proxy::unwrap(args.Holder());
+
+	jvalue* jArguments = 0;
+
+	jobject javaProxy = proxy->getJavaObject();
+	env->CallVoidMethodA(javaProxy, methodID, jArguments);
+
+	if (!JavaObject::useGlobalRefs) {
+		env->DeleteLocalRef(javaProxy);
+	}
+
 
 
 	if (env->ExceptionCheck()) {
@@ -280,6 +325,49 @@ Handle<Value> SigninProxy::setMessage(const Arguments& args)
 
 
 				env->DeleteLocalRef(jArguments[0].l);
+
+
+	if (env->ExceptionCheck()) {
+		titanium::JSException::fromJavaException();
+		env->ExceptionClear();
+	}
+
+
+
+
+	return v8::Undefined();
+
+}
+Handle<Value> SigninProxy::signIn(const Arguments& args)
+{
+	LOGD(TAG, "signIn()");
+	HandleScope scope;
+
+	JNIEnv *env = titanium::JNIScope::getEnv();
+	if (!env) {
+		return titanium::JSException::GetJNIEnvironmentError();
+	}
+	static jmethodID methodID = NULL;
+	if (!methodID) {
+		methodID = env->GetMethodID(SigninProxy::javaClass, "signIn", "()V");
+		if (!methodID) {
+			const char *error = "Couldn't find proxy method 'signIn' with signature '()V'";
+			LOGE(TAG, error);
+				return titanium::JSException::Error(error);
+		}
+	}
+
+	titanium::Proxy* proxy = titanium::Proxy::unwrap(args.Holder());
+
+	jvalue* jArguments = 0;
+
+	jobject javaProxy = proxy->getJavaObject();
+	env->CallVoidMethodA(javaProxy, methodID, jArguments);
+
+	if (!JavaObject::useGlobalRefs) {
+		env->DeleteLocalRef(javaProxy);
+	}
+
 
 
 	if (env->ExceptionCheck()) {

@@ -1,3 +1,4 @@
 "D:/Documents/titanium_projects/authtimesheet/android/build/generated/java/ti/authtimesheet/AuthtimesheetBootstrap.java"
+"D:/Documents/titanium_projects/authtimesheet/android/src/Lcom/google/android/gms/R.java"
 "D:/Documents/titanium_projects/authtimesheet/android/src/ti/authtimesheet/AuthtimesheetModule.java"
 "D:/Documents/titanium_projects/authtimesheet/android/src/ti/authtimesheet/SigninProxy.java"

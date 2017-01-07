@@ -1,5 +1,5 @@
 
-2017-01-06 11:57:51
+2017-01-07 15:25:56
 
 Operating System
   Name                        = Microsoft Windows 10 Home Single Language
@@ -51,5 +51,5 @@ Verifying build architectures
 Packaging the module
 [INFO]   Generate module JAR: jar "cf" "D:\Documents\titanium_projects\authtimesheet\android\dist\authtimesheet.jar" "-C" "D:\Documents\titanium_projects\authtimesheet\android\build\classes" "." "-C" "D:\Documents\titanium_projects\authtimesheet\android" "assets"
 [INFO]   Creating module zip
-[INFO]   Writing module zip: D:\Documents\titanium_projects\authtimesheet\android\dist\ti.authtimesheet-android-1.0.1.zip
-[INFO]   Project built successfully in 12s 512ms
+[INFO]   Writing module zip: D:\Documents\titanium_projects\authtimesheet\android\dist\ti.authtimesheet-android-1.0.3.zip
+[INFO]   Project built successfully in 14s 721ms
