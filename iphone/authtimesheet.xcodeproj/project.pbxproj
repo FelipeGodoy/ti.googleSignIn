@@ -28,6 +28,7 @@
 		24DE9E1211C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = 24DE9E1011C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.m */; };
 		AA747D9F0F9514B9006C5449 /* TiAuthtimesheet_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* TiAuthtimesheet_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		E09907DFDC3BD959FDBC0704 /* libPods-authtimesheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D19B279CA560838791FEAFEC /* libPods-authtimesheet.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,19 +37,20 @@
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = "authtimesheet";
+			remoteInfo = authtimesheet;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		24DD6CF71134B3F500162E58 /* TiAuthtimesheetModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TiAuthtimesheetModule.h"; path = "Classes/TiAuthtimesheetModule.h"; sourceTree = "<group>"; };
-		24DD6CF81134B3F500162E58 /* TiAuthtimesheetModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TiAuthtimesheetModule.m"; path = "Classes/TiAuthtimesheetModule.m"; sourceTree = "<group>"; };
+		24DD6CF71134B3F500162E58 /* TiAuthtimesheetModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiAuthtimesheetModule.h; path = Classes/TiAuthtimesheetModule.h; sourceTree = "<group>"; };
+		24DD6CF81134B3F500162E58 /* TiAuthtimesheetModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TiAuthtimesheetModule.m; path = Classes/TiAuthtimesheetModule.m; sourceTree = "<group>"; };
 		24DD6D1B1134B66800162E58 /* titanium.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = titanium.xcconfig; sourceTree = "<group>"; };
-		24DE9E0F11C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TiAuthtimesheetModuleAssets.h"; path = "Classes/TiAuthtimesheetModuleAssets.h"; sourceTree = "<group>"; };
-		24DE9E1011C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "TiAuthtimesheetModuleAssets.m"; path = "Classes/TiAuthtimesheetModuleAssets.m"; sourceTree = "<group>"; };
-		AA747D9E0F9514B9006C5449 /* TiAuthtimesheet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TiAuthtimesheet_Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		24DE9E0F11C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiAuthtimesheetModuleAssets.h; path = Classes/TiAuthtimesheetModuleAssets.h; sourceTree = "<group>"; };
+		24DE9E1011C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TiAuthtimesheetModuleAssets.m; path = Classes/TiAuthtimesheetModuleAssets.m; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* TiAuthtimesheet_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiAuthtimesheet_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D2AAC07E0554694100DB518D /* libTiAuthtimesheet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libTiAuthtimesheet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D19B279CA560838791FEAFEC /* libPods-authtimesheet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-authtimesheet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2AAC07E0554694100DB518D /* libTiAuthtimesheet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTiAuthtimesheet.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+				E09907DFDC3BD959FDBC0704 /* libPods-authtimesheet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,21 +74,23 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0867D691FE84028FC02AAC07 /* authtimesheet */ = {
+		0867D691FE84028FC02AAC07 = {
 			isa = PBXGroup;
 			children = (
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
+				F134EDDFCCA2DAFD88424C1A /* Pods */,
 			);
-			name = "authtimesheet";
+			name = authtimesheet;
 			sourceTree = "<group>";
 		};
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+				D19B279CA560838791FEAFEC /* libPods-authtimesheet.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -110,6 +115,13 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
+		F134EDDFCCA2DAFD88424C1A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -130,16 +142,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "authtimesheet" */;
 			buildPhases = (
+				5306B3FC5D8D18299DAC4011 /* [CP] Check Pods Manifest.lock */,
 				D2AAC07A0554694100DB518D /* Headers */,
 				D2AAC07B0554694100DB518D /* Sources */,
 				D2AAC07C0554694100DB518D /* Frameworks */,
+				3775CBCA31C99F4FAE19D37C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "authtimesheet";
-			productName = "authtimesheet";
+			name = authtimesheet;
+			productName = authtimesheet;
 			productReference = D2AAC07E0554694100DB518D /* libTiAuthtimesheet.a */;
 			productType = "com.apple.product-type.library.static";
 		};
@@ -161,7 +175,7 @@
 				French,
 				German,
 			);
-			mainGroup = 0867D691FE84028FC02AAC07 /* authtimesheet */;
+			mainGroup = 0867D691FE84028FC02AAC07;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -185,6 +199,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# shell script goes here\n\npython \"${TITANIUM_SDK}/titanium.py\" run --dir=\"${PROJECT_DIR}\"\nexit $?\n";
+		};
+		3775CBCA31C99F4FAE19D37C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-authtimesheet/Pods-authtimesheet-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5306B3FC5D8D18299DAC4011 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -215,11 +259,11 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DSTROOT = "/tmp/TiAuthtimesheet.dst";
+				DSTROOT = /tmp/TiAuthtimesheet.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiAuthtimesheet_Prefix.pch";
+				GCC_PREFIX_HEADER = TiAuthtimesheet_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -239,7 +283,7 @@
 					"-DTI_POST_1_2",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiAuthtimesheet";
+				PRODUCT_NAME = TiAuthtimesheet;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
@@ -253,11 +297,11 @@
 			baseConfigurationReference = 24DD6D1B1134B66800162E58 /* titanium.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				DSTROOT = "/tmp/TiAuthtimesheet.dst";
+				DSTROOT = /tmp/TiAuthtimesheet.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiAuthtimesheet_Prefix.pch";
+				GCC_PREFIX_HEADER = TiAuthtimesheet_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -274,7 +318,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiAuthtimesheet";
+				PRODUCT_NAME = TiAuthtimesheet;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -288,11 +332,11 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DSTROOT = "/tmp/TiAuthtimesheet.dst";
+				DSTROOT = /tmp/TiAuthtimesheet.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiAuthtimesheet_Prefix.pch";
+				GCC_PREFIX_HEADER = TiAuthtimesheet_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -311,7 +355,7 @@
 					"-DTI_POST_1_2",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiAuthtimesheet";
+				PRODUCT_NAME = TiAuthtimesheet;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				RUN_CLANG_STATIC_ANALYZER = NO;
@@ -326,11 +370,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LIBRARY = "libstdc++";
-				DSTROOT = "/tmp/TiAuthtimesheet.dst";
+				DSTROOT = /tmp/TiAuthtimesheet.dst;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TiAuthtimesheet_Prefix.pch";
+				GCC_PREFIX_HEADER = TiAuthtimesheet_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "TI_VERSION=$(TI_VERSION)";
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_VERSION = "";
@@ -346,7 +390,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DTI_POST_1_2";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "TiAuthtimesheet";
+				PRODUCT_NAME = TiAuthtimesheet;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "";
