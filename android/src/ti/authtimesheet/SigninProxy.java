@@ -42,6 +42,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.api.OptionalPendingResult;
 
 //backend id: 1047497242003-nul6kfbbg32krgj6ik46o3mnp04ej9as.apps.googleusercontent.com
 // This proxy can be created by calling Authtimesheet.createSigin({message: "hello world"})
@@ -128,31 +129,26 @@ public class SigninProxy extends TiViewProxy implements GoogleApiClient.OnConnec
 
  		if ( thisRequestCode == RC_GET_AUTH_CODE) {
  			GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
- 				if(result.isSuccess()){
- 					GoogleSignInAccount acct = result.getSignInAccount();
- 					HashMap event = new HashMap();
- 					event.put("name", acct.getDisplayName());
- 					event.put("email", acct.getEmail());
- 					event.put("id_token", acct.getIdToken());
-					event.put("serverAuthCode", acct.getServerAuthCode());
- 					event.put("photo", acct.getPhotoUrl().toString());
- 					this.onSuccess.call(getKrollObject(),event);
- 			}
+ 			sendSigninResult(result);
  		}
  	}
 
+	private void sendSigninResult(GoogleSignInResult result){
+		if (onSuccess == null) return;
+		if(result.isSuccess()){
+			GoogleSignInAccount acct = result.getSignInAccount();
+			HashMap event = new HashMap();
+			event.put("name", acct.getDisplayName());
+			event.put("email", acct.getEmail());
+			event.put("id_token", acct.getIdToken());
+			event.put("serverAuthCode", acct.getServerAuthCode());
+			event.put("photo", acct.getPhotoUrl().toString());
+			this.onSuccess.call(getKrollObject(),event);
+		}
+	}
+
 	@Kroll.method
 	public void signOut() {
-		// mGoogleApiClient.connect();
-		// if(mGoogleApiClient.isConnected()) {
-		// 	Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-		// 		new ResultCallback<Status>() {
-		// 			@Override
-		// 			public void onResult(Status status) {
-		// 			}
-		// 		}
-		// 	);
-		// }
 		mGoogleApiClient.connect();
 		mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
 		@Override
@@ -163,9 +159,6 @@ public class SigninProxy extends TiViewProxy implements GoogleApiClient.OnConnec
 			           public void onResult(Status status) {
 			               if (status.isSuccess()) {
 			                   Log.d(LCAT, "User Logged out");
-			               //     Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
-			               //     startActivity(intent);
-			               //     finish();
 			               }
 			           }
 			       });
@@ -179,11 +172,22 @@ public class SigninProxy extends TiViewProxy implements GoogleApiClient.OnConnec
 	}
 
 	@Kroll.method
+	public void silentSignIn(){
+		OptionalPendingResult<GoogleSignInResult> pendingResult = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+		if (pendingResult.isDone()) {
+		  sendSigninResult(pendingResult.get());
+		} else {
+		  pendingResult.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+		      @Override
+		      public void onResult(GoogleSignInResult result) {
+		          sendSigninResult(result);
+		      }
+		  });
+		}
+	}
+
+	@Kroll.method
 	public void signIn() {
-        // Start the retrieval process for a server auth code.  If requested, ask for a refresh
-        // token.  Otherwise, only get an access token if a refresh token has been previously
-        // retrieved.  Getting a new access token for an existing grant does not require
-        // user consent.
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
 		  Activity activity = TiApplication.getInstance().getCurrentActivity();
 		  TiActivitySupport support = (TiActivitySupport) activity;
@@ -214,23 +218,15 @@ public class SigninProxy extends TiViewProxy implements GoogleApiClient.OnConnec
 		}
 	}
 
-	// Methods
-	@Kroll.method
-	public void printMessage(String message)
-	{
-		Log.d(LCAT, "printing message: " + message);
-	}
-
-
-	@Kroll.getProperty @Kroll.method
-	public String getMessage()
-	{
-        return "Hello World from my module";
-	}
-
-	@Kroll.setProperty @Kroll.method
-	public void setMessage(String message)
-	{
-	    Log.d(LCAT, "Tried setting module message to: " + message);
-	}
+	// @Kroll.getProperty @Kroll.method
+	// public String getMessage()
+	// {
+   //      return "Hello World from my module";
+	// }
+	//
+	// @Kroll.setProperty @Kroll.method
+	// public void setMessage(String message)
+	// {
+	//     Log.d(LCAT, "Tried setting module message to: " + message);
+	// }
 }

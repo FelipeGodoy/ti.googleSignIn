@@ -86,10 +86,8 @@ Handle<FunctionTemplate> SigninProxy::getProxyTemplate()
 	titanium::ProxyFactory::registerProxyPair(javaClass, *proxyTemplate);
 
 	// Method bindings --------------------------------------------------------
-	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "printMessage", SigninProxy::printMessage);
 	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "signOut", SigninProxy::signOut);
-	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "getMessage", SigninProxy::getMessage);
-	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "setMessage", SigninProxy::setMessage);
+	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "silentSignIn", SigninProxy::silentSignIn);
 	DEFINE_PROTOTYPE_METHOD(proxyTemplate, "signIn", SigninProxy::signIn);
 
 	Local<ObjectTemplate> prototypeTemplate = proxyTemplate->PrototypeTemplate();
@@ -102,10 +100,6 @@ Handle<FunctionTemplate> SigninProxy::getProxyTemplate()
 	// Constants --------------------------------------------------------------
 
 	// Dynamic properties -----------------------------------------------------
-	instanceTemplate->SetAccessor(String::NewSymbol("message"),
-			SigninProxy::getter_message
-			, SigninProxy::setter_message
-, Handle<Value>(), DEFAULT);
 
 	// Accessors --------------------------------------------------------------
 
@@ -113,71 +107,6 @@ Handle<FunctionTemplate> SigninProxy::getProxyTemplate()
 }
 
 // Methods --------------------------------------------------------------------
-Handle<Value> SigninProxy::printMessage(const Arguments& args)
-{
-	LOGD(TAG, "printMessage()");
-	HandleScope scope;
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		return titanium::JSException::GetJNIEnvironmentError();
-	}
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(SigninProxy::javaClass, "printMessage", "(Ljava/lang/String;)V");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'printMessage' with signature '(Ljava/lang/String;)V'";
-			LOGE(TAG, error);
-				return titanium::JSException::Error(error);
-		}
-	}
-
-	titanium::Proxy* proxy = titanium::Proxy::unwrap(args.Holder());
-
-	if (args.Length() < 1) {
-		char errorStringBuffer[100];
-		sprintf(errorStringBuffer, "printMessage: Invalid number of arguments. Expected 1 but got %d", args.Length());
-		return ThrowException(Exception::Error(String::New(errorStringBuffer)));
-	}
-
-	jvalue jArguments[1];
-
-
-
-
-	
-	
-	if (!args[0]->IsNull()) {
-		Local<Value> arg_0 = args[0];
-		jArguments[0].l =
-			titanium::TypeConverter::jsValueToJavaString(env, arg_0);
-	} else {
-		jArguments[0].l = NULL;
-	}
-
-	jobject javaProxy = proxy->getJavaObject();
-	env->CallVoidMethodA(javaProxy, methodID, jArguments);
-
-	if (!JavaObject::useGlobalRefs) {
-		env->DeleteLocalRef(javaProxy);
-	}
-
-
-
-				env->DeleteLocalRef(jArguments[0].l);
-
-
-	if (env->ExceptionCheck()) {
-		titanium::JSException::fromJavaException();
-		env->ExceptionClear();
-	}
-
-
-
-
-	return v8::Undefined();
-
-}
 Handle<Value> SigninProxy::signOut(const Arguments& args)
 {
 	LOGD(TAG, "signOut()");
@@ -221,9 +150,9 @@ Handle<Value> SigninProxy::signOut(const Arguments& args)
 	return v8::Undefined();
 
 }
-Handle<Value> SigninProxy::getMessage(const Arguments& args)
+Handle<Value> SigninProxy::silentSignIn(const Arguments& args)
 {
-	LOGD(TAG, "getMessage()");
+	LOGD(TAG, "silentSignIn()");
 	HandleScope scope;
 
 	JNIEnv *env = titanium::JNIScope::getEnv();
@@ -232,9 +161,9 @@ Handle<Value> SigninProxy::getMessage(const Arguments& args)
 	}
 	static jmethodID methodID = NULL;
 	if (!methodID) {
-		methodID = env->GetMethodID(SigninProxy::javaClass, "getMessage", "()Ljava/lang/String;");
+		methodID = env->GetMethodID(SigninProxy::javaClass, "silentSignIn", "()V");
 		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getMessage' with signature '()Ljava/lang/String;'";
+			const char *error = "Couldn't find proxy method 'silentSignIn' with signature '()V'";
 			LOGE(TAG, error);
 				return titanium::JSException::Error(error);
 		}
@@ -245,86 +174,12 @@ Handle<Value> SigninProxy::getMessage(const Arguments& args)
 	jvalue* jArguments = 0;
 
 	jobject javaProxy = proxy->getJavaObject();
-	jstring jResult = (jstring)env->CallObjectMethodA(javaProxy, methodID, jArguments);
-
-
-
-	if (!JavaObject::useGlobalRefs) {
-		env->DeleteLocalRef(javaProxy);
-	}
-
-
-
-	if (env->ExceptionCheck()) {
-		Handle<Value> jsException = titanium::JSException::fromJavaException();
-		env->ExceptionClear();
-		return jsException;
-	}
-
-	if (jResult == NULL) {
-		return Null();
-	}
-
-	Handle<Value> v8Result = titanium::TypeConverter::javaStringToJsString(env, jResult);
-
-	env->DeleteLocalRef(jResult);
-
-
-	return v8Result;
-
-}
-Handle<Value> SigninProxy::setMessage(const Arguments& args)
-{
-	LOGD(TAG, "setMessage()");
-	HandleScope scope;
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		return titanium::JSException::GetJNIEnvironmentError();
-	}
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(SigninProxy::javaClass, "setMessage", "(Ljava/lang/String;)V");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'setMessage' with signature '(Ljava/lang/String;)V'";
-			LOGE(TAG, error);
-				return titanium::JSException::Error(error);
-		}
-	}
-
-	titanium::Proxy* proxy = titanium::Proxy::unwrap(args.Holder());
-
-	if (args.Length() < 1) {
-		char errorStringBuffer[100];
-		sprintf(errorStringBuffer, "setMessage: Invalid number of arguments. Expected 1 but got %d", args.Length());
-		return ThrowException(Exception::Error(String::New(errorStringBuffer)));
-	}
-
-	jvalue jArguments[1];
-
-
-
-
-	
-	
-	if (!args[0]->IsNull()) {
-		Local<Value> arg_0 = args[0];
-		jArguments[0].l =
-			titanium::TypeConverter::jsValueToJavaString(env, arg_0);
-	} else {
-		jArguments[0].l = NULL;
-	}
-
-	jobject javaProxy = proxy->getJavaObject();
 	env->CallVoidMethodA(javaProxy, methodID, jArguments);
 
 	if (!JavaObject::useGlobalRefs) {
 		env->DeleteLocalRef(javaProxy);
 	}
 
-
-
-				env->DeleteLocalRef(jArguments[0].l);
 
 
 	if (env->ExceptionCheck()) {
@@ -383,123 +238,6 @@ Handle<Value> SigninProxy::signIn(const Arguments& args)
 }
 
 // Dynamic property accessors -------------------------------------------------
-
-Handle<Value> SigninProxy::getter_message(Local<String> property, const AccessorInfo& info)
-{
-	LOGD(TAG, "get message");
-	HandleScope scope;
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		return titanium::JSException::GetJNIEnvironmentError();
-	}
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(SigninProxy::javaClass, "getMessage", "()Ljava/lang/String;");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'getMessage' with signature '()Ljava/lang/String;'";
-			LOGE(TAG, error);
-				return titanium::JSException::Error(error);
-		}
-	}
-
-	titanium::Proxy* proxy = titanium::Proxy::unwrap(info.Holder());
-
-	if (!proxy) {
-		return Undefined();
-	}
-
-	jvalue* jArguments = 0;
-
-	jobject javaProxy = proxy->getJavaObject();
-	jstring jResult = (jstring)env->CallObjectMethodA(javaProxy, methodID, jArguments);
-
-
-
-	if (!JavaObject::useGlobalRefs) {
-		env->DeleteLocalRef(javaProxy);
-	}
-
-
-
-	if (env->ExceptionCheck()) {
-		Handle<Value> jsException = titanium::JSException::fromJavaException();
-		env->ExceptionClear();
-		return jsException;
-	}
-
-	if (jResult == NULL) {
-		return Null();
-	}
-
-	Handle<Value> v8Result = titanium::TypeConverter::javaStringToJsString(env, jResult);
-
-	env->DeleteLocalRef(jResult);
-
-
-	return v8Result;
-
-}
-
-void SigninProxy::setter_message(Local<String> property, Local<Value> value, const AccessorInfo& info)
-{
-	LOGD(TAG, "set message");
-	HandleScope scope;
-
-	JNIEnv *env = titanium::JNIScope::getEnv();
-	if (!env) {
-		LOGE(TAG, "Failed to get environment, message wasn't set");
-		return;
-	}
-
-	static jmethodID methodID = NULL;
-	if (!methodID) {
-		methodID = env->GetMethodID(SigninProxy::javaClass, "setMessage", "(Ljava/lang/String;)V");
-		if (!methodID) {
-			const char *error = "Couldn't find proxy method 'setMessage' with signature '(Ljava/lang/String;)V'";
-			LOGE(TAG, error);
-		}
-	}
-
-	titanium::Proxy* proxy = titanium::Proxy::unwrap(info.Holder());
-	if (!proxy) {
-		return;
-	}
-
-	jvalue jArguments[1];
-
-	
-	
-	if (!value->IsNull()) {
-		Local<Value> arg_0 = value;
-		jArguments[0].l =
-			titanium::TypeConverter::jsValueToJavaString(env, arg_0);
-	} else {
-		jArguments[0].l = NULL;
-	}
-
-	jobject javaProxy = proxy->getJavaObject();
-	env->CallVoidMethodA(javaProxy, methodID, jArguments);
-
-	if (!JavaObject::useGlobalRefs) {
-		env->DeleteLocalRef(javaProxy);
-	}
-
-
-
-				env->DeleteLocalRef(jArguments[0].l);
-
-
-	if (env->ExceptionCheck()) {
-		titanium::JSException::fromJavaException();
-		env->ExceptionClear();
-	}
-
-
-
-
-}
-
 
 
 			} // namespace authtimesheet
