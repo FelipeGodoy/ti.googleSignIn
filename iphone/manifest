@@ -2,8 +2,8 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.0.0
-apiversion: 2
+version: 1.0.4
+apiversion: 6
 architectures: armv7 arm64 i386 x86_64
 description: authtimesheet
 author: Your Name

@@ -6,8 +6,9 @@
  */
 
 #import "TiModule.h"
+#import <GoogleSignIn/GoogleSignIn.h>
 
-@interface TiAuthtimesheetModule : TiModule
+@interface TiAuthtimesheetModule : TiModule 
 {
 }
 
