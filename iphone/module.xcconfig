@@ -16,7 +16,7 @@
 //
 // OTHER_LDFLAGS[sdk=iphoneos4*]=$(inherited) -framework Foo
 //FRAMEWORK_SEARCH_PATHS=$(SRCROOT)/../../modules/iphone/ti.authtimesheet/1.0.1/platform
-OTHER_LDFLAGS=$(inherited) -framework StoreKit -framework AddressBook -framework SystemConfiguration -framework SafariServices -F"$(SRCROOT)/../../modules/iphone/ti.authtimesheet/1.0.4/platform" -framework GoogleAppUtilities -framework GoogleSignInDependencies -framework GoogleSymbolUtilities -framework GoogleSignIn
+OTHER_LDFLAGS=$(inherited) -ObjC -lz -framework StoreKit -framework AddressBook -framework SystemConfiguration -framework SafariServices -F"$(SRCROOT)/../../modules/iphone/ti.authtimesheet/1.0.5/platform" -framework GoogleAppUtilities -framework GoogleSignInDependencies -framework GoogleSymbolUtilities -framework GoogleSignIn
 //
 //
 // How to add a compiler define:

@@ -24,6 +24,8 @@
 /* Begin PBXBuildFile section */
 		233C769A1E23409E00F1CE87 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 233C76991E23409E00F1CE87 /* StoreKit.framework */; };
 		233C769C1E2340D800F1CE87 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 233C769B1E2340D800F1CE87 /* AddressBook.framework */; };
+		233C76A31E2522F400F1CE87 /* MyTiApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 233C76A21E2522F400F1CE87 /* MyTiApp.m */; };
+		233C76A41E2525C400F1CE87 /* MyTiApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 233C76A11E2521DC00F1CE87 /* MyTiApp.h */; };
 		23CA29BF1E22D77200615016 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CA29BE1E22D77200615016 /* SafariServices.framework */; };
 		23CA29C11E22D77800615016 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CA29C01E22D77800615016 /* SystemConfiguration.framework */; };
 		23CA29CB1E23210F00615016 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 23CA29CA1E23210F00615016 /* GoogleSignIn.bundle */; };
@@ -52,6 +54,9 @@
 /* Begin PBXFileReference section */
 		233C76991E23409E00F1CE87 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		233C769B1E2340D800F1CE87 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		233C769D1E23F38600F1CE87 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		233C76A11E2521DC00F1CE87 /* MyTiApp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MyTiApp.h; path = Classes/MyTiApp.h; sourceTree = "<group>"; };
+		233C76A21E2522F400F1CE87 /* MyTiApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTiApp.m; path = Classes/MyTiApp.m; sourceTree = "<group>"; };
 		23CA29BE1E22D77200615016 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		23CA29C01E22D77800615016 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		23CA29CA1E23210F00615016 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleSignIn.bundle; path = platform/GoogleSignIn.bundle; sourceTree = "<group>"; };
@@ -112,6 +117,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				233C769D1E23F38600F1CE87 /* libz.tbd */,
 				233C769B1E2340D800F1CE87 /* AddressBook.framework */,
 				233C76991E23409E00F1CE87 /* StoreKit.framework */,
 				23CA29CC1E23213700615016 /* GoogleAppUtilities.framework */,
@@ -132,6 +138,8 @@
 				24DE9E1011C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.m */,
 				24DD6CF71134B3F500162E58 /* TiAuthtimesheetModule.h */,
 				24DD6CF81134B3F500162E58 /* TiAuthtimesheetModule.m */,
+				233C76A11E2521DC00F1CE87 /* MyTiApp.h */,
+				233C76A21E2522F400F1CE87 /* MyTiApp.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -152,6 +160,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				233C76A41E2525C400F1CE87 /* MyTiApp.h in Headers */,
 				AA747D9F0F9514B9006C5449 /* TiAuthtimesheet_Prefix.pch in Headers */,
 				24DD6CF91134B3F500162E58 /* TiAuthtimesheetModule.h in Headers */,
 				24DE9E1111C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.h in Headers */,
@@ -240,6 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				233C76A31E2522F400F1CE87 /* MyTiApp.m in Sources */,
 				24DD6CFA1134B3F500162E58 /* TiAuthtimesheetModule.m in Sources */,
 				24DE9E1211C5FE74003F90F6 /* TiAuthtimesheetModuleAssets.m in Sources */,
 			);
@@ -290,7 +300,10 @@
 					"-DDEBUG",
 					"-DTI_POST_1_2",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lz",
+				);
 				PRODUCT_NAME = TiAuthtimesheet;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -330,7 +343,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-DTI_POST_1_2";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lz",
+				);
 				PRODUCT_NAME = TiAuthtimesheet;
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				SDKROOT = iphoneos;
